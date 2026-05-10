@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>Test iOS Touch</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+body { font-family: Arial, sans-serif; background: #f0f2f5; padding: 20px; font-size: 18px; }
+h2 { color: #1A2A4A; margin-bottom: 20px; font-size: 20px; }
+.section { background: #fff; border: 1px solid #ddd; padding: 16px; margin-bottom: 16px; border-radius: 4px; }
+.section h3 { font-size: 14px; letter-spacing: 1px; text-transform: uppercase; color: #888; margin-bottom: 12px; }
+button {
+  display: block; width: 100%; padding: 16px;
+  background: #1A2A4A; color: #fff;
+  border: none; border-radius: 4px;
+  font-size: 18px; font-family: Arial, sans-serif;
+  cursor: pointer; margin-bottom: 8px;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: rgba(255,255,255,0.2);
+  min-height: 54px;
+}
+button:active { background: #2A4A8A; }
+.result {
+  padding: 12px; background: #E8F5E9;
+  border: 1px solid #4CAF50; border-radius: 4px;
+  font-size: 15px; color: #1B5E20;
+  margin-top: 12px; min-height: 50px;
+}
+.pin-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; }
+.pin-key {
+  padding: 18px; background: #f5f5f5;
+  border: 1px solid #ddd; border-radius: 4px;
+  font-size: 24px; text-align: center;
+  cursor: pointer; touch-action: manipulation;
+  min-height: 60px; display: flex; align-items: center; justify-content: center;
+}
+.pin-key:active { background: #1A2A4A; color: #fff; }
+/* Sidebar simulation */
+.sidebar-sim {
+  background: #1A2A4A; padding: 12px;
+  border-radius: 4px;
+}
+.sb-item-sim {
+  display: flex; align-items: center;
+  padding: 14px 12px; color: rgba(255,255,255,0.9);
+  font-size: 16px; width: 100%; text-align: left;
+  border: none; background: none;
+  cursor: pointer; touch-action: manipulation;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  min-height: 50px;
+}
+.sb-item-sim:active { background: rgba(255,255,255,0.2) !important; }
+#log { background: #1A2A4A; color: #D4C49A; padding: 12px; border-radius: 4px; font-family: monospace; font-size: 13px; max-height: 200px; overflow-y: auto; }
+</style>
+</head>
+<body>
+
+<h2>🧪 Test iOS Touch — Miqdar</h2>
+
+<!-- TEST 1: Basic button -->
+<div class="section">
+  <h3>Test 1 · Botón simple</h3>
+  <button onclick="log('✅ Botón simple funciona')">Pulsa aquí</button>
+</div>
+
+<!-- TEST 2: PIN keys -->
+<div class="section">
+  <h3>Test 2 · PIN numérico</h3>
+  <div class="pin-grid">
+    <div class="pin-key" onclick="log('✅ PIN 1')">1</div>
+    <div class="pin-key" onclick="log('✅ PIN 2')">2</div>
+    <div class="pin-key" onclick="log('✅ PIN 3')">3</div>
+    <button onclick="log('✅ PIN btn 4')" style="background:#f5f5f5;color:#1A2A4A;border:1px solid #ddd;">4 (button)</button>
+    <button onclick="log('✅ PIN btn 5')" style="background:#f5f5f5;color:#1A2A4A;border:1px solid #ddd;">5 (button)</button>
+    <button onclick="log('✅ PIN btn 6')" style="background:#f5f5f5;color:#1A2A4A;border:1px solid #ddd;">6 (button)</button>
+  </div>
+</div>
+
+<!-- TEST 3: Sidebar simulation -->
+<div class="section">
+  <h3>Test 3 · Sidebar simulado</h3>
+  <div class="sidebar-sim">
+    <button class="sb-item-sim" onclick="log('✅ Dashboard')">⊞ Dashboard</button>
+    <button class="sb-item-sim" onclick="log('✅ Módulos SOPs')">⊟ Módulos SOPs</button>
+    <button class="sb-item-sim" onclick="log('✅ Checklists')">✓ Checklists</button>
+    <button class="sb-item-sim" onclick="log('✅ Alertas')">◉ Alertas</button>
+  </div>
+</div>
+
+<!-- TEST 4: Fixed position -->
+<div class="section">
+  <h3>Test 4 · Div con onclick (como antes)</h3>
+  <div onclick="log('✅ DIV onclick funciona')" style="padding:16px;background:#f5f5f5;border:1px solid #ddd;border-radius:4px;text-align:center;cursor:pointer;min-height:54px;display:flex;align-items:center;justify-content:center;">
+    Toca este DIV
+  </div>
+</div>
+
+<!-- TEST 5: Input -->
+<div class="section">
+  <h3>Test 5 · Input de texto</h3>
+  <input type="email" placeholder="Escribe tu email" style="width:100%;padding:14px;border:1px solid #ddd;border-radius:4px;font-size:16px;" oninput="log('✅ Input: '+this.value)">
+</div>
+
+<!-- LOG -->
+<div class="section">
+  <h3>Registro de eventos</h3>
+  <div id="log">Esperando interacciones...<br></div>
+  <button onclick="document.getElementById('log').innerHTML='Limpiado<br>'" style="background:#888;margin-top:8px;">Limpiar log</button>
+</div>
+
+<script>
+var count = 0;
+function log(msg) {
+  count++;
+  var el = document.getElementById('log');
+  var time = new Date().toLocaleTimeString('es-ES');
+  el.innerHTML += count + '. ' + time + ' → ' + msg + '<br>';
+  el.scrollTop = el.scrollHeight;
+}
+
+// Detect touch support
+log('Dispositivo: ' + navigator.userAgent.substring(0,50));
+log('Touch events: ' + ('ontouchstart' in window ? 'SÍ' : 'NO'));
+log('iOS: ' + (/iphone|ipad|ipod/i.test(navigator.userAgent) ? 'SÍ' : 'NO'));
+log('Safari: ' + (/safari/i.test(navigator.userAgent) && !/chrome/i.test(navigator.userAgent) ? 'SÍ' : 'NO'));
+log('---Listo para pruebas---');
+
+// Global touch listener for divs
+document.addEventListener('touchend', function(e) {
+  var el = e.target;
+  // Walk up to find onclick
+  for(var i=0; i<5; i++) {
+    if(!el) break;
+    if(el.tagName==='BUTTON'||el.tagName==='A') break; // buttons handle themselves
+    if(el.getAttribute('onclick')) {
+      e.preventDefault();
+      var fn = el.getAttribute('onclick');
+      try { eval(fn); } catch(err) { log('Error: '+err); }
+      return;
+    }
+    el = el.parentElement;
+  }
+}, {passive: false});
+</script>
+</body>
+</html>
