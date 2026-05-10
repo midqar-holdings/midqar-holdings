@@ -1,5 +1,5 @@
 // Midqar Foundation · Service Worker v1.1
-const CACHE_NAME = 'midqar-v2';
+const CACHE_NAME = 'midqar-v3';
 const ASSETS = [
   './',
   './index.html',
